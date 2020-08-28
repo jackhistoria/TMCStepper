@@ -11,6 +11,8 @@
  * You can control the rotation speed with
  * 0 Stop
  * 1 Resume
+ * 2 Direction 1
+ * 3 Direction 2
  * + Speed up
  * - Slow down
  */
@@ -21,12 +23,12 @@
 
 #define STALL_VALUE     100 // [0..255]
 
-#define EN_PIN           38 // Enable
-#define DIR_PIN          55 // Direction
-#define STEP_PIN         54 // Step
-#define SW_RX            63 // TMC2208/TMC2224 SoftwareSerial receive pin
-#define SW_TX            40 // TMC2208/TMC2224 SoftwareSerial transmit pin
-#define SERIAL_PORT Serial1 // TMC2208/TMC2224 HardwareSerial port
+#define EN_PIN           38 // Enable       //Mini 7
+#define DIR_PIN          55 // Direction    //Mini 8
+#define STEP_PIN         54 // Step         //Mini 9
+#define SW_RX            63 // TMC2208/TMC2224 SoftwareSerial receive pin   //Mini 5
+#define SW_TX            40 // TMC2208/TMC2224 SoftwareSerial transmit pin  //Mini 6
+#define SERIAL_PORT Serial1 // TMC2208/TMC2224 HardwareSerial port          //Mini Serial
 #define DRIVER_ADDRESS 0b00 // TMC2209 Driver address according to MS1 and MS2
 
 #define R_SENSE 0.11f // Match to your driver
@@ -37,7 +39,7 @@
 
 // Select your stepper driver type
 //TMC2209Stepper driver(&SERIAL_PORT, R_SENSE, DRIVER_ADDRESS);
-//TMC2209Stepper driver(SW_RX, SW_TX, R_SENSE, DRIVER_ADDRESS);
+//TMC2209Stepper driver(SW_RX, SW_TX, R_SENSE, DRIVER_ADDRESS); //<-- Mini
 
 using namespace TMC2208_n;
 
@@ -106,6 +108,9 @@ void loop() {
     #endif
     else if (read_byte == '+') { if (OCR1A > MAX_SPEED) OCR1A -= 20; }
     else if (read_byte == '-') { if (OCR1A < MIN_SPEED) OCR1A += 20; }
+    
+    else if (read_byte == '2') {digitalWrite( DIR_PIN, HIGH);}  // Direction one
+    else if (read_byte == '3') {digitalWrite( DIR_PIN, LOW);}   // Direction two
   }
 
   if((ms-last_time) > 100) { //run every 0.1s
