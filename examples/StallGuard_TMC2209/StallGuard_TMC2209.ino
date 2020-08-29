@@ -13,6 +13,8 @@
  * 1 Resume
  * + Speed up
  * - Slow down
+ * 2 Direction one (f.e. left acc. to conn.)
+ * 3 Direction two (f.e. right acc. to conn.)
  */
 #include <TMCStepper.h>
 
@@ -106,6 +108,9 @@ void loop() {
     #endif
     else if (read_byte == '+') { if (OCR1A > MAX_SPEED) OCR1A -= 20; }
     else if (read_byte == '-') { if (OCR1A < MIN_SPEED) OCR1A += 20; }
+    
+    else if (read_byte == '2') {digitalWrite( DIR_PIN, HIGH);}  //left
+    else if (read_byte == '3') {digitalWrite( DIR_PIN, LOW);}   //right 
   }
 
   if((ms-last_time) > 100) { //run every 0.1s
