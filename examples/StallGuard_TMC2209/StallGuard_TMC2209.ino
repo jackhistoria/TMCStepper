@@ -11,10 +11,10 @@
  * You can control the rotation speed with
  * 0 Stop
  * 1 Resume
- * + Speed up
- * - Slow down
  * 2 Direction one (f.e. left acc. to conn.)
  * 3 Direction two (f.e. right acc. to conn.)
+ * + Speed up
+ * - Slow down
  */
 #include <TMCStepper.h>
 
